@@ -20,8 +20,8 @@ RUN wget https://ckev.in/code/screenrc -O .screenrc
 WORKDIR "/root"
 RUN git clone https://github.com/riscv/riscv-gnu-toolchain
 WORKDIR "/root/riscv-gnu-toolchain"
-RUN ./configure --prefix=/opt/riscv
-RUN make
+RUN ./configure --prefix=/opt/riscv && \
+make
 
 # Download and configure QEMU
 WORKDIR "/root"
