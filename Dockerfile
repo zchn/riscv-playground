@@ -12,7 +12,7 @@ rm -rf /var/lib/apt/lists/*
 
 # Download configurations
 WORKDIR "/root"
-wget https://ckev.in/code/screenrc -O .screenrc
+RUN wget https://ckev.in/code/screenrc -O .screenrc
 
 # Download and configure QEMU
 WORKDIR "/root"
