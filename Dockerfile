@@ -4,6 +4,8 @@ EXPOSE 2222
 # Install all needed packages
 RUN apt-get update && \
 apt-get install -y --no-install-recommends ca-certificates git wget build-essential ninja-build libglib2.0-dev libpixman-1-dev u-boot-qemu unzip && \
+apt-get install -y --no-install-recommends autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk bison flex texinfo && \
+apt-get install -y --no-install-recommends gperf libtool patchutils bc zlib1g-dev libexpat-dev && \
 apt-get install -y --no-install-recommends emacs-nox screen && \
 # clean up the temp files
 apt-get autoremove -y && \
@@ -13,6 +15,13 @@ rm -rf /var/lib/apt/lists/*
 # Download configurations
 WORKDIR "/root"
 RUN wget https://ckev.in/code/screenrc -O .screenrc
+
+# Download and install RISC-V GNU Toolchain
+WORKDIR "/root"
+RUN git clone https://github.com/riscv/riscv-gnu-toolchain
+WORKDIR "/root/riscv-gnu-toolchain"
+RUN ./configure --prefix=/opt/riscv
+RUN make
 
 # Download and configure QEMU
 WORKDIR "/root"
