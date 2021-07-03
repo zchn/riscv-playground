@@ -20,6 +20,8 @@ RUN wget https://ckev.in/code/screenrc -O .screenrc
 WORKDIR "/root"
 RUN git clone https://github.com/riscv/riscv-gnu-toolchain
 WORKDIR "/root/riscv-gnu-toolchain"
+# Do this as a separate step in order to cache the fetched source.
+RUN git submodule update --init --recursive
 RUN ./configure --prefix=/opt/riscv && \
 make
 
