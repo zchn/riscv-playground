@@ -22,10 +22,13 @@ RUN git clone https://github.com/riscv/riscv-gnu-toolchain
 WORKDIR "/root/riscv-gnu-toolchain"
 # Do this as a separate step in order to cache the fetched source.
 RUN git submodule update --init --recursive
-RUN ./configure --prefix=/opt/riscv && \
+# git submodule update --init --recursive is intentionally done twice in case it needs to be updated right before compilation.
+RUN git submodule update --init --recursive && \
+./configure --prefix=/opt/riscv --enable-multilib && \
 make
 
 # Download and configure QEMU
+# TODO: See if riscv-gnu-toolchain can just use this one.
 WORKDIR "/root"
 RUN git clone https://github.com/qemu/qemu && \ 
 mkdir /root/qemu/build  && cd /root/qemu/build && \
